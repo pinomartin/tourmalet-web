@@ -1,14 +1,21 @@
 import type { Config } from "tailwindcss";
+import { fontFamily } from "tailwindcss/defaultTheme";
+import animatePlugin from "tailwindcss-animate";
 
-export default {
-    darkMode: ["class"],
+const config: Config = {
+    darkMode: "class",
     content: [
-    "./src/pages/**/*.{js,ts,jsx,tsx,mdx}",
-    "./src/components/**/*.{js,ts,jsx,tsx,mdx}",
-    "./src/app/**/*.{js,ts,jsx,tsx,mdx}",
+    "./pages/**/*.{js,ts,jsx,tsx,mdx}",
+    "./components/**/*.{js,ts,jsx,tsx,mdx}",
+    "./app/**/*.{js,ts,jsx,tsx,mdx}",
+    "./src/**/*.{js,ts,jsx,tsx,mdx}",
   ],
   theme: {
     extend: {
+      fontFamily: {
+        sans: ["Inter", ...fontFamily.sans],
+        heading: ["Plus Jakarta Sans", ...fontFamily.sans],
+      },
       colors: {
         background: 'hsl(var(--background))',
         foreground: 'hsl(var(--foreground))',
@@ -58,22 +65,63 @@ export default {
       },
       container: {
       center: true,
-      padding: {
-        DEFAULT: '1rem',
-        sm: '2rem',
-        lg: '4rem',
-        xl: '5rem',
-        '2xl': '6rem',
-      },
+      padding: "2rem",
       screens: {
-        sm: '640px',
-        md: '768px',
-        lg: '1024px',
-        xl: '1280px',
-        '2xl': '1536px',
+        "2xl": "1400px",
       },
+      },
+      keyframes: {
+        "accordion-down": {
+          from: { height: "0" },
+          to: { height: "var(--radix-accordion-content-height)" },
+        },
+        "accordion-up": {
+          from: { height: "var(--radix-accordion-content-height)" },
+          to: { height: "0" },
+        },
+        fadeIn: {
+          from: { opacity: "0" },
+          to: { opacity: "1" }
+        },
+        slideUp: {
+          from: { transform: "translateY(20px)", opacity: "0" },
+          to: { transform: "translateY(0)", opacity: "1" }
+        },
+        slideDown: {
+          from: { transform: "translateY(-20px)", opacity: "0" },
+          to: { transform: "translateY(0)", opacity: "1" }
+        },
+        scaleIn: {
+          from: { transform: "scale(0.95)", opacity: "0" },
+          to: { transform: "scale(1)", opacity: "1" }
+        }
+      },
+      animation: {
+        "accordion-down": "accordion-down 0.2s ease-out",
+        "accordion-up": "accordion-up 0.2s ease-out",
+        "fadeIn": "fadeIn 0.3s ease-in-out",
+        "slideUp": "slideUp 0.5s ease-out",
+        "slideDown": "slideDown 0.5s ease-out",
+        "scaleIn": "scaleIn 0.5s ease-out"
+      },
+      transitionDuration: {
+        '400': '400ms',
+        '2000': '2000ms',
+        '3000': '3000ms',
+      },
+      boxShadow: {
+        'subtle': '0 2px 15px -3px rgba(0, 0, 0, 0.1), 0 4px 6px -4px rgba(0, 0, 0, 0.1)',
+        'card': '0 1px 3px 0 rgba(0, 0, 0, 0.1), 0 1px 2px -1px rgba(0, 0, 0, 0.1)',
+      },
+      backgroundImage: {
+        'gradient-radial': 'radial-gradient(var(--tw-gradient-stops))',
+        'gradient-conic': 'conic-gradient(from 180deg at 50% 50%, var(--tw-gradient-stops))',
+        'noise': "url('/patterns/noise.png')",
+        'grid': "url('/patterns/grid.png')",
       },
     }
   },
-  plugins: [require("tailwindcss-animate")],
+  plugins: [animatePlugin],
 } satisfies Config;
+
+export default config;
